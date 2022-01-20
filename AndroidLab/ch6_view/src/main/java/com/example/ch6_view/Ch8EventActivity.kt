@@ -4,26 +4,32 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
-import android.view.View
 import android.widget.CompoundButton
+import com.example.ch6_view.databinding.ActivityCh8EventBinding
 import com.example.ch6_view.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class Ch8EventActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        val binding = ActivityCh8EventBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.checkBox.setOnCheckedChangeListener(object: CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
-                Log.e("Han", "2 - ${p0.toString()} / ${p1.toString()}")
+                Log.e("Han", "1 - ${p0.toString()} / ${p1.toString()}")
             }
         })
 
-        binding.checkBox.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
+        binding.checkBox.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener {
+            compoundButton, b ->
             Log.e("Han", "2 - ${compoundButton.toString()} / ${b.toString()}")
         })
+
+        binding.checkBox.setOnCheckedChangeListener {
+            compoundButton, b ->
+            Log.e("Han", "3 - ${compoundButton.toString()} / ${b.toString()}")
+        }
 
     }
 
