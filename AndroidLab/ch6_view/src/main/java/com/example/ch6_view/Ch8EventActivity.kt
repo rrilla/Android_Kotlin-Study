@@ -21,16 +21,20 @@ class Ch8EventActivity : AppCompatActivity() {
             }
         })
 
-        binding.checkBox.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener {
-            compoundButton, b ->
-            Log.e("Han", "2 - ${compoundButton.toString()} / ${b.toString()}")
-        })
+//        binding.checkBox.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener {
+//            compoundButton, b ->
+//            Log.e("Han", "2 - ${compoundButton.toString()} / ${b.toString()}")
+//        })
 
-        binding.checkBox.setOnCheckedChangeListener {
-            compoundButton, b ->
-            Log.e("Han", "3 - ${compoundButton.toString()} / ${b.toString()}")
+//        binding.checkBox.setOnCheckedChangeListener {
+//            compoundButton, b ->
+//            Log.e("Han", "3 - ${compoundButton.toString()} / ${b.toString()}")
+//        }
+
+        binding.checkBox.setOnCheckedChangeListener{
+            c,b ->
+            Log.e("han","${c.toString() + b.toString()}");
         }
-
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
