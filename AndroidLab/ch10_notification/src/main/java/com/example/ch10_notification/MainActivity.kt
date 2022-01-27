@@ -2,13 +2,15 @@ package com.example.ch10_notification
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.media.MediaPlayer
+import android.media.RingtoneManager
 import android.net.Uri
-import android.os.Build
+import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
@@ -47,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         useCustumDialog()
+        notificationSound()
     }
 
     fun useCustumDialog() {
@@ -58,6 +61,39 @@ class MainActivity : AppCompatActivity() {
             setPositiveButton("닫기", null)
             show()
         }
+    }
+
+    fun notificationSound() {
+        //  안드로이드 시스템에 등록된 소리 사용
+//        val notification: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+//        RingtoneManager.getRingtone(applicationContext, notification).play()
+
+        //  리소스 파일로 등록하여 소리 사용
+        MediaPlayer.create(this, R.raw.test_sound).start()
+    }
+
+    fun notificationVibrate() {
+        //  manifiest 권한 필요 <uses-permission android:name="android.permission.VIBRATE" />
+        //  as = 지정한 타입으로 캐스트를 하고, 캐스트 할 수 없으면 null을 반환
+        val vibrator =
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val vibratorManager =  this.getSystemService(VIBRATOR_MANAGER_SERVICE) as VibratorManager
+                vibratorManager.defaultVibrator;
+            } else {
+                getSystemService(VIBRATOR_SERVICE) as Vibrator
+            }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            //  500동안 기본 세기로 진동 울리기
+            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+//          // 반복해서 진동 울리기 : 0.5초간 안울림 -> 1초간 100세기로 울림 -> 2초간 300세기로 울림, 한번만 반복(0은 cancel함수 호출시까지 울림)
+            vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(500, 1000, 2000), intArrayOf(0, 100, 300), -1))
+        } else {
+            vibrator.vibrate(500)
+        }
+
+        Build.VERSION_CODES.S
+        Build.VERSION_CODES.O
+        vibrator.vibrate(500)
     }
 
     //  isPermissionGranted()함수 내부에서 권한 체크를 하였으나
