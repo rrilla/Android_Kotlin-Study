@@ -11,6 +11,9 @@ import androidx.core.app.RemoteInput
 class ReplyReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
+        // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
+        TODO("ReplyReceiver.onReceive() is not implemented")
+
         //알림의 입력글 획득
         val replyTxt = RemoteInput.getResultsFromIntent(intent)?.getCharSequence("key_text_reply")
         Log.e("Han", "replyTxt : $replyTxt")
