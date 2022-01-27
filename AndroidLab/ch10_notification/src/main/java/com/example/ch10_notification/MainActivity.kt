@@ -11,11 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.ch10_notification.databinding.ActivityMainBinding
+import com.example.ch10_notification.databinding.DialogInputBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
@@ -39,9 +41,22 @@ class MainActivity : AppCompatActivity() {
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         if(isPermissionGranted()) {
             getCurrentLocation()
+        }
+
+        useCustumDialog()
+    }
+
+    fun useCustumDialog() {
+        val dialogBinding = DialogInputBinding.inflate(layoutInflater)
+        AlertDialog.Builder(this).run {
+            setTitle("My custum dialog")
+            setView(dialogBinding.root)
+//            setView(R.layout.dialog_input)
+            setPositiveButton("닫기", null)
+            show()
         }
     }
 
@@ -49,11 +64,10 @@ class MainActivity : AppCompatActivity() {
     //  사용자가 거부할 권한이 필요하다는 경고 무시 위해 추가
     @SuppressLint("MissingPermission")
     fun getCurrentLocation() {
-        Log.e("han","1");
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        Log.e("han","1")
         fusedLocationClient.lastLocation.addOnSuccessListener {
                 location: Location? ->
-            Log.e("han","2");
+            Log.e("han","2")
             if (location != null) {
                 binding.tvLocation.text = "위도: ${ location.latitude + Random.nextInt() % 15} / 경도: ${location.longitude + Random.nextInt() % 15}"
             } else
