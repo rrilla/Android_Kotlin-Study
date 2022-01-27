@@ -25,8 +25,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import kotlin.random.Random
 
-const val REQUEST_CODE = 100
-
 class MainActivity : AppCompatActivity() {
 
     //  바인딩 객체 전역변수로 선언
@@ -37,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy {mBinding!!}
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val REQUEST_CODE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
