@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         //리사이클러뷰를 위한 가상 데이터 준비...........
         val datas = mutableListOf<String>()
