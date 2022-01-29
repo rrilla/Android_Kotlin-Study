@@ -39,9 +39,15 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         //  뒤로가기 버튼을 네비게이션 아이콘으로 설정
         toggle.syncState()
+        //  네비게이션 항목 선택 이벤트 핸들러
+        binding.mainDrawerView.setNavigationItemSelectedListener {
+            Log.e("Han", "네비게이션 아이템 클릭 - ${it.title}")
+            true
+        }
 
         val adapter = MyFragmentPagerAdapter(this)
         binding.viewpager.adapter = adapter
+        //  탭 레이아웃, 뷰 페이저2 연동 / 탭 이름 설정
         TabLayoutMediator(binding.tabs, binding.viewpager) {
             tab, position ->
             tab.text = "Tab${(position + 1)}"
