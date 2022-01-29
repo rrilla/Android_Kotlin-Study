@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.ch16_provider_test.databinding.ActivityMainBinding
 import java.io.File
 
@@ -30,9 +31,39 @@ class MainActivity : AppCompatActivity() {
 //        )
 //        startActivityForResult(intent, 20)
 
+//        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//        intent.type = "image/*"
+//        startActivityForResult(intent, 10)
+
+        val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            try {
+                //inSampleSize 비율 계산, 지정
+                val calRatio = calculateInSampleSize(
+                    it!!.data!!.data!!,
+                    resources.getDimensionPixelSize(R.dimen.imgSize),
+                    resources.getDimensionPixelSize(R.dimen.imgSize)
+                )
+                val option = BitmapFactory.Options()
+                option.inSampleSize = calRatio
+
+                //이미지 로딩
+                var inputStream = contentResolver.openInputStream(it!!.data!!.data!!)
+                val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+                inputStream!!.close()
+                inputStream = null
+                bitmap?.let {
+                    binding.userImageView.setImageBitmap(bitmap)
+                } ?: let {
+                    Log.d("Han", "bitmap null.............")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
         startActivityForResult(intent, 10)
+        startForResult.launch(intent)
     }
 
     private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int {
