@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
 //        val intent = Intent(Intent.ACTION_PICK,
 //            ContactsContract.Contacts.CONTENT_URI   //  모든 사람
 ////            ContactsContract.CommonDataKinds.Email.CONTENT_URI   //   이메일 정보가 있는 사람
@@ -62,7 +61,6 @@ class MainActivity : AppCompatActivity() {
         }
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
-        startActivityForResult(intent, 10)
         startForResult.launch(intent)
     }
 

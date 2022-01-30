@@ -10,6 +10,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/activity_result_api_test" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/ch10_notification" />
             <option value="$PROJECT_DIR$/ch11_jetpack" />
