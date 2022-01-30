@@ -23,6 +23,31 @@ class RetrofitFragment : Fragment() {
     ): View? {
         val binding = FragmentRetrofitBinding.inflate(inflater, container, false)
 
+        val call: Call<PageListModel> = MyApplication.networkService.getList(
+            MyApplication.QUERY,
+            MyApplication.API_KEY,
+            1,
+            10
+        )
+        call?.enqueue(object: Callback<PageListModel> {
+            override fun onResponse(
+                call: Call<PageListModel>,
+                response: Response<PageListModel>
+            ) {
+                if (response.isSuccessful) {
+
+                    binding.retrofitRecyclerView.layoutManager =
+                        LinearLayoutManager(activity)
+                    binding.retrofitRecyclerView.adapter =
+                        MyAdapter(activity as Context, response.body()?.articles)
+                }
+            }
+            override fun onFailure(
+                call: Call<PageListModel?>,
+                t: Throwable
+            ) {
+            }
+        })
 
 
         return binding.root

@@ -16,7 +16,15 @@ class MyApplication: Application() {
 
 
         //add....................................
-
+        var networkService: NetworkService
+        val retrofit: Retrofit
+            get() = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        init {
+            networkService = retrofit.create(NetworkService::class.java)
+        }
     }
 
 }
