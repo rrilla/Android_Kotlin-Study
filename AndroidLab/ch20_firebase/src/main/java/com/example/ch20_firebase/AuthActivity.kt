@@ -67,7 +67,7 @@ class AuthActivity : AppCompatActivity() {
             //구글 로그인....................
             val gso = GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(getString(R.string.google_web_client_id))
                 .requestEmail()
                 .build()
             // 구글의 인증 관리 앱 실행
@@ -102,6 +102,7 @@ class AuthActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(baseContext, "회원가입 실패",
                             Toast.LENGTH_SHORT).show()
+                        Log.e("Han", task.exception.toString())
                         changeVisibility("logout")
                     }
                 }
