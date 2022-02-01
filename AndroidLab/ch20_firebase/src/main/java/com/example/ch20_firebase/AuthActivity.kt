@@ -39,15 +39,18 @@ class AuthActivity : AppCompatActivity() {
                 MyApplication.auth.signInWithCredential(credential)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
+                            Log.e("han", "구글로그인성공 : ${task.result.user}")
                             // 구글 로그인 성공
                             MyApplication.email = account.email
                             changeVisibility("login")
                         } else {
+                            Log.e("han", "구글로그인실패")
                             // 구글 로그인 실패
                             changeVisibility("logout")
                         }
                     }
             } catch (e: ApiException) {
+                Log.e("han", "구글로그인실패 : ${e.printStackTrace()}")
                 changeVisibility("logout")
             }
         }
@@ -121,6 +124,8 @@ class AuthActivity : AppCompatActivity() {
                         if (MyApplication.checkAuth()) {
                             // 로그인 성공
                             MyApplication.email = email
+                            Log.e("Han", "로그인성공 콜백 매개변수 데이터 : ${task.result.user}")
+                            Log.e("Han", "로그인성공 콜백 매개변수 데이터 : ${task.result.user.toString()}")
                             changeVisibility("login")
                         } else {
                             // 발송된 메일로 인증 확인을 안 한 경우
